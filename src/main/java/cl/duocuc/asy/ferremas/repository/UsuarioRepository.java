@@ -8,7 +8,7 @@ import cl.duocuc.asy.ferremas.model.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    Optional<Usuario> findByEmail(String email);
+    Optional<Usuario> findByCorreo(String correo);
     // Aquí puedes agregar métodos personalizados si es necesario
 
 }
