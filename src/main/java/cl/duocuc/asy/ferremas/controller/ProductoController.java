@@ -1,6 +1,9 @@
 package cl.duocuc.asy.ferremas.controller;
 
+import cl.duocuc.asy.ferremas.dto.ProductoCreateDTO;
+import cl.duocuc.asy.ferremas.model.Categoria;
 import cl.duocuc.asy.ferremas.model.Producto;
+import cl.duocuc.asy.ferremas.model.SubCategoria;
 import cl.duocuc.asy.ferremas.services.service.ProductoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +17,8 @@ import java.util.Optional;
 public class ProductoController {
 
     private final ProductoService productoService;
+    private final cl.duocuc.asy.ferremas.services.service.CategoriaService categoriaService;
+    private final cl.duocuc.asy.ferremas.services.service.SubCategoriaService subCategoriaService;
 
     @GetMapping
     public List<Producto> getAll() {
@@ -26,7 +31,18 @@ public class ProductoController {
     }
 
     @PostMapping
-    public Producto create(@RequestBody Producto producto) {
+    public Producto create(@RequestBody ProductoCreateDTO dto) {
+        Categoria categoria = categoriaService.buscarPorId(dto.getCategoriaId());
+        SubCategoria subCategoria = subCategoriaService.buscarPorId(dto.getSubCategoriaId());
+        Producto producto = Producto.builder()
+                .nombre(dto.getNombre())
+                .descripcion(dto.getDescripcion())
+                .marca(dto.getMarca())
+                .stock(dto.getStock())
+                .imagenUrl(dto.getImagenUrl())
+                .categoria(categoria)
+                .subCategoria(subCategoria)
+                .build();
         return productoService.crearProducto(producto);
     }
 

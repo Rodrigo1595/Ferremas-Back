@@ -35,6 +35,9 @@ public class Producto {
     @Column(name = "stock", nullable = false)
     private Integer stock;
 
+    @Column(name = "imagen_url")
+    private String imagenUrl;
+
     @OneToMany(mappedBy = "producto", cascade = jakarta.persistence.CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     @JsonIgnore
@@ -43,5 +46,10 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
+
+    @ManyToOne
+    @JoinColumn(name = "subcategoria_id")
+    private SubCategoria subCategoria;
+
 
 }
