@@ -29,6 +29,9 @@ public class ProductoServiceImpl implements ProductoService {
         if (producto == null) {
             throw new IllegalArgumentException("El producto no puede ser nulo");
         }
+        Long count = productoRepository.count() + 1;
+        String cod = String.format("FER-%06d", count);
+        producto.setCodProducto(cod);
         return productoRepository.save(producto);
     }
 
