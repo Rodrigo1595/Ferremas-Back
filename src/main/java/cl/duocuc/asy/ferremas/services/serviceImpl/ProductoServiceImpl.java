@@ -72,4 +72,9 @@ public class ProductoServiceImpl implements ProductoService {
         return productoRepository.findByCodProducto(codProducto);
     }
 
+    @Override
+    public List<Producto> findBySubCategoriaId(Long subCategoriaId) {
+        return productoRepository.findBySubCategoriaId(subCategoriaId);
+    }
+
 }

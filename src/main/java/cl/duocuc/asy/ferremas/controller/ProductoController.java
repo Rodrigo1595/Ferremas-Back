@@ -190,4 +190,38 @@ public class ProductoController {
             return dto;
         }).orElse(null);
     }
+
+    @GetMapping("/buscar")
+    public List<ProductoResponseDTO> getBySubCategoriaOrCategoria(
+            @RequestParam(required = false) Long subCategoriaId,
+            @RequestParam Long categoriaId) {
+        List<Producto> productos;
+        if (subCategoriaId != null) {
+            productos = productoService.findBySubCategoriaId(subCategoriaId);
+            if (productos.isEmpty()) {
+                // Fallback a categoría si no hay productos en la subcategoría
+                productos = productoService.findByCategoriaId(categoriaId);
+            }
+        } else {
+            productos = productoService.findByCategoriaId(categoriaId);
+        }
+        return productos.stream().map(producto -> {
+            ProductoResponseDTO dto = new ProductoResponseDTO();
+            dto.setId(producto.getId());
+            dto.setCodProducto(producto.getCodProducto());
+            dto.setNombre(producto.getNombre());
+            dto.setDescripcion(producto.getDescripcion());
+            dto.setMarca(producto.getMarca());
+            dto.setStock(producto.getStock());
+            dto.setImagenUrl(producto.getImagenUrl());
+            dto.setCategoriaId(producto.getCategoria() != null ? producto.getCategoria().getId() : null);
+            dto.setSubCategoriaId(producto.getSubCategoria() != null ? producto.getSubCategoria().getId() : null);
+            dto.setPrecioActual(
+                precioService.findPrecioActivoByProductoId(producto.getId())
+                    .map(Precio::getValor)
+                    .orElse(null)
+            );
+            return dto;
+        }).collect(Collectors.toList());
+    }
 }

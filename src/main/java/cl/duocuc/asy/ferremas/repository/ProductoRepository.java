@@ -9,6 +9,7 @@ import cl.duocuc.asy.ferremas.model.Producto;
 
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
 
+    List<Producto> findBySubCategoriaId(Long subCategoriaId);
     List<Producto> findByCategoriaId(Long categoriaId);
 
     Optional<Producto> findByCodProducto(String codProducto);
