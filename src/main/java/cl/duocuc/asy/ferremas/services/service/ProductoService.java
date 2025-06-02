@@ -18,4 +18,5 @@ public interface ProductoService {
 
     Optional<Producto> findProductobyId(Long id);
 
+    Optional<Producto> findByCodProducto(String codProducto);
 }

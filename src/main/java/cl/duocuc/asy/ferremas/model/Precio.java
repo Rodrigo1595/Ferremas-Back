@@ -18,6 +18,7 @@ public class Precio {
 
     private LocalDateTime fecha;
     private double valor;
+    private boolean activo;
 
     @ManyToOne
     @JoinColumn(name = "producto_id")

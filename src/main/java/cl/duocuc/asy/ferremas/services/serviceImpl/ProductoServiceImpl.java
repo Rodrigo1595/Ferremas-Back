@@ -67,4 +67,9 @@ public class ProductoServiceImpl implements ProductoService {
         return productoRepository.findById(id);
     }
 
+    @Override
+    public Optional<Producto> findByCodProducto(String codProducto) {
+        return productoRepository.findByCodProducto(codProducto);
+    }
+
 }

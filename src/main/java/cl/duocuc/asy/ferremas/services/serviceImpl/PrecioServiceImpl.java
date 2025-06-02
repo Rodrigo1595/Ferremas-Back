@@ -8,6 +8,9 @@ import cl.duocuc.asy.ferremas.services.service.PrecioService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -49,8 +52,15 @@ public class PrecioServiceImpl implements PrecioService {
         }
         precioRepository.deleteById(id);
     }
-    
-    
 
+    @Override
+    public List<Precio> findByProductoId(Long productoId) {
+        return precioRepository.findByProductoId(productoId);
+    }
+
+    @Override
+    public Optional<Precio> findPrecioActivoByProductoId(Long productoId) {
+        return precioRepository.findByProductoIdAndActivoTrue(productoId);
+    }
 
 }
