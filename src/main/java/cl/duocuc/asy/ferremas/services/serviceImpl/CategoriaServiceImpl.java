@@ -4,8 +4,10 @@ import cl.duocuc.asy.ferremas.model.Categoria;
 import cl.duocuc.asy.ferremas.repository.CategoriaRepository;
 import cl.duocuc.asy.ferremas.services.service.CategoriaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     public Categoria crearCategoria(Categoria categoria) {
         if (categoria == null) {
-            throw new IllegalArgumentException("La categoría no puede ser nula");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La categoría no puede ser nula");
         }
         return categoriaRepository.save(categoria);
     }
@@ -27,10 +29,10 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     public Categoria actualizarCategoria(Categoria categoria) {
         if (categoria == null || categoria.getId() == null) {
-            throw new IllegalArgumentException("La categoría o su ID no pueden ser nulos");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La categoría o su ID no pueden ser nulos");
         }
         if (!categoriaRepository.existsById(categoria.getId())) {
-            throw new IllegalArgumentException("La categoría con el ID especificado no existe");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La categoría con el ID especificado no existe");
         }
         return categoriaRepository.save(categoria);
     }
@@ -38,10 +40,10 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     public void eliminarCategoria(Long id) {
         if (id == null) {
-            throw new IllegalArgumentException("El ID de la categoría no puede ser nulo");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El ID de la categoría no puede ser nulo");
         }
         if (!categoriaRepository.existsById(id)) {
-            throw new IllegalArgumentException("La categoría con el ID especificado no existe");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La categoría con el ID especificado no existe");
         }
         categoriaRepository.deleteById(id);
     }
@@ -49,9 +51,10 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     public Categoria buscarPorId(Long id) {
         if (id == null) {
-            throw new IllegalArgumentException("El ID de la categoría no puede ser nulo");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El ID de la categoría no puede ser nulo");
         }
-        return categoriaRepository.findById(id).orElse(null);
+        return categoriaRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoría no encontrada"));
     }
 
     @Override
