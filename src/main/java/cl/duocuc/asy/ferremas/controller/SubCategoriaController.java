@@ -39,4 +39,9 @@ public class SubCategoriaController {
     public void delete(@PathVariable Long id) {
         subCategoriaService.eliminarSubCategoria(id);
     }
+
+    @GetMapping("/categoria/{categoriaId}")
+    public List<SubCategoria> getByCategoriaId(@PathVariable Long categoriaId) {
+        return subCategoriaService.findByCategoriaId(categoriaId);
+    }
 }

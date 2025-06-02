@@ -40,4 +40,9 @@ public class SubCategoriaServiceImpl implements SubCategoriaService {
     public List<SubCategoria> findAll() {
         return subCategoriaRepository.findAll();
     }
+
+    @Override
+    public List<SubCategoria> findByCategoriaId(Long categoriaId) {
+        return subCategoriaRepository.findByCategoriaId(categoriaId);
+    }
 }

@@ -9,4 +9,5 @@ public interface SubCategoriaService {
     void eliminarSubCategoria(Long id);
     SubCategoria buscarPorId(Long id);
     List<SubCategoria> findAll();
+    List<SubCategoria> findByCategoriaId(Long categoriaId);
 }
