@@ -4,7 +4,10 @@ import cl.duocuc.asy.ferremas.model.ItemPedido;
 import cl.duocuc.asy.ferremas.services.service.ItemPedidoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+
+@Tag(name = "ItemPedidos", description = "Gestión de ítems de pedidos: crear, actualizar, eliminar y consultar ítems por ID, pedido o producto.")
 @RestController
 @RequestMapping("/api/itempedidos")
 @RequiredArgsConstructor

@@ -2,9 +2,11 @@ package cl.duocuc.asy.ferremas.controller;
 
 import cl.duocuc.asy.ferremas.model.Pedido;
 import cl.duocuc.asy.ferremas.services.service.PedidoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Pedidos", description = "Gestión de pedidos: crear, actualizar, eliminar y consultar pedidos por usuario o sucursal.")
 @RestController
 @RequestMapping("/api/pedidos")
 @RequiredArgsConstructor

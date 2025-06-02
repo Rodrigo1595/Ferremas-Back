@@ -24,8 +24,10 @@ import cl.transbank.webpay.exception.TransactionCreateException;
 import cl.transbank.webpay.exception.TransactionRefundException;
 import cl.transbank.webpay.exception.TransactionStatusException;
 import cl.transbank.webpay.webpayplus.WebpayPlus.Transaction;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.PostConstruct;
 
+@Tag(name = "WebPay", description = "Integración con Transbank Webpay Plus para pagos electrónicos (modo pruebas).")
 @RestController
 public class WebPayController {
 

@@ -2,9 +2,11 @@ package cl.duocuc.asy.ferremas.controller;
 
 import cl.duocuc.asy.ferremas.model.Usuario;
 import cl.duocuc.asy.ferremas.services.service.UsuarioService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Usuarios", description = "Gestión de usuarios: crear, actualizar, eliminar y consultar usuarios por ID o correo.")
 @RestController
 @RequestMapping("/api/usuarios")
 @RequiredArgsConstructor

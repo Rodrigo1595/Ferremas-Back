@@ -7,6 +7,7 @@ import cl.duocuc.asy.ferremas.model.Producto;
 import cl.duocuc.asy.ferremas.model.SubCategoria;
 import cl.duocuc.asy.ferremas.model.Precio;
 import cl.duocuc.asy.ferremas.services.service.ProductoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Tag(name = "Productos", description = "Operaciones para gestión de productos, consulta, creación, actualización, eliminación y consulta de precios históricos.")
 @RestController
 @RequestMapping("/api/productos")
 @RequiredArgsConstructor

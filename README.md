@@ -125,3 +125,17 @@ o
 
 **Autor:**  
 [rodamigo95](https://github.com/rodamigo95)
+
+
+## Utilizar Transbank TEST con:
+
+VISA 	4051 8856 0044 6623
+CVV 123
+Any expiration date 	
+Generates approved transactions.
+
+MASTERCARD 	5186 0595 5959 0568
+CVV 123
+any expiration date 	Generates declined transactions.
+
+RUT 11.111.111-1  password 123

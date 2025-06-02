@@ -2,11 +2,13 @@ package cl.duocuc.asy.ferremas.controller;
 
 import cl.duocuc.asy.ferremas.model.SubCategoria;
 import cl.duocuc.asy.ferremas.services.service.SubCategoriaService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Subcategorías", description = "Gestión de subcategorías: crear, listar, actualizar y eliminar subcategorías asociadas a categorías.")
 @RestController
 @RequestMapping("/api/subcategorias")
 @RequiredArgsConstructor
