@@ -1,5 +1,6 @@
 package cl.duocuc.asy.ferremas.services.serviceImpl;
 
+import cl.duocuc.asy.ferremas.dto.EmpleadoLoginResponse;
 import cl.duocuc.asy.ferremas.model.Empleado;
 import cl.duocuc.asy.ferremas.repository.EmpleadoRepository;
 import cl.duocuc.asy.ferremas.services.service.EmpleadoService;
@@ -60,5 +61,21 @@ public class EmpleadoServiceImpl implements EmpleadoService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El ID del usuario no puede ser nulo");
         }
         return usuarioRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public EmpleadoLoginResponse login(String correo, String password) {
+        if (correo == null || password == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Correo y contraseña son requeridos");
+        }
+        Empleado empleado = usuarioRepository.findByCorreo(correo)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas"));
+        if (!empleado.getPassword().equals(password)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas");
+        }
+        EmpleadoLoginResponse response = new EmpleadoLoginResponse();
+        response.setCorreo(empleado.getCorreo());
+        response.setRol(empleado.getRol());
+        return response;
     }
 }

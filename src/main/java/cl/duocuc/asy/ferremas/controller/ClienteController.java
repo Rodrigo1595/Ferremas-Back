@@ -1,5 +1,6 @@
 package cl.duocuc.asy.ferremas.controller;
 
+import cl.duocuc.asy.ferremas.dto.LoginRequest;
 import cl.duocuc.asy.ferremas.model.Cliente;
 import cl.duocuc.asy.ferremas.services.service.ClienteService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -43,5 +44,10 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         clienteService.eliminarCliente(id);
+    }
+
+    @PostMapping("/login")
+    public Cliente login(@RequestBody LoginRequest loginRequest) {
+        return clienteService.login(loginRequest.getCorreo(), loginRequest.getPassword());
     }
 }

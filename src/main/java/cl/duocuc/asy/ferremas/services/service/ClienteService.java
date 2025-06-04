@@ -16,4 +16,5 @@ public interface ClienteService {
 
     Cliente findByCorreoCliente(String correo);
 
+    Cliente login(String correo, String password);
 }

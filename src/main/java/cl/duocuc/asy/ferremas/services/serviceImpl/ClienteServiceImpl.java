@@ -72,5 +72,16 @@ public class ClienteServiceImpl implements ClienteService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado con el correo dado"));
     }
 
-    
+    @Override
+    public Cliente login(String correo, String password) {
+        if (correo == null || password == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Correo y contraseña son requeridos");
+        }
+        Cliente cliente = clienteRepository.findByCorreo(correo)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas"));
+        if (!cliente.getPassword().equals(password)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas");
+        }
+        return cliente;
+    }
 }

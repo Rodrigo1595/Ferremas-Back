@@ -32,6 +32,7 @@ public class ProductoServiceImpl implements ProductoService {
         Long count = productoRepository.count() + 1;
         String cod = String.format("FER-%06d", count);
         producto.setCodProducto(cod);
+        producto.setFechaIngreso(new java.sql.Date(System.currentTimeMillis()));
         return productoRepository.save(producto);
     }
 

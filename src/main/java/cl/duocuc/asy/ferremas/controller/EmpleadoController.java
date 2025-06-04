@@ -1,5 +1,7 @@
 package cl.duocuc.asy.ferremas.controller;
 
+import cl.duocuc.asy.ferremas.dto.LoginRequest;
+import cl.duocuc.asy.ferremas.dto.EmpleadoLoginResponse;
 import cl.duocuc.asy.ferremas.model.Empleado;
 import cl.duocuc.asy.ferremas.services.service.EmpleadoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,5 +41,10 @@ public class EmpleadoController {
     @GetMapping("/correo/{correo}")
     public Empleado getByCorreo(@PathVariable String correo) {
         return usuarioService.obtenerEmpleadoPorEmail(correo);
+    }
+
+    @PostMapping("/login")
+    public EmpleadoLoginResponse login(@RequestBody LoginRequest loginRequest) {
+        return usuarioService.login(loginRequest.getCorreo(), loginRequest.getPassword());
     }
 }
