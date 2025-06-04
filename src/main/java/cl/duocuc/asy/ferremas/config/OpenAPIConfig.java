@@ -38,7 +38,7 @@ public class OpenAPIConfig {
                       <li><code>/api/divisas/dolar</code>: Valor del dólar en tiempo real.</li>
                     </ul>
                     <br>
-                    <b>Raccoon Dev a cargo 🦝 : </b> <a href="https://github.com/rodamigo95" target="_blank">rodamigo95</a>
+                    <b>Raccoon dev a cargo 🦝 : </b> <a href="https://github.com/Rodrigo1595" target="_blank">Rodrigo1595</a>
                     """));
     }
 }
