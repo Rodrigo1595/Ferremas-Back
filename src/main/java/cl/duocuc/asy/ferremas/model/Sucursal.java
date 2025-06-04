@@ -26,6 +26,6 @@ public class Sucursal {
     private List<Pedido> pedidos;
 
     @OneToMany(mappedBy = "sucursal", cascade = CascadeType.ALL)
-    private List<Usuario> usuarios;
+    private List<Empleado> usuarios;
 
 }

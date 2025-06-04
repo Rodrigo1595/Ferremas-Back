@@ -21,8 +21,8 @@ public class Pedido {
     private LocalDateTime fecha;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario; // quien realiza el pedido
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "sucursal_id")

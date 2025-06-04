@@ -4,9 +4,12 @@ import cl.duocuc.asy.ferremas.model.Pedido;
 import cl.duocuc.asy.ferremas.services.service.PedidoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Pedidos", description = "Gestión de pedidos: crear, actualizar, eliminar y consultar pedidos por usuario o sucursal.")
+@Tag(name = "Pedidos", description = "Gestión de pedidos: crear, actualizar, eliminar y consultar pedidos por cliente o sucursal.")
 @RestController
 @RequestMapping("/api/pedidos")
 @RequiredArgsConstructor
@@ -40,9 +43,9 @@ public class PedidoController {
         pedidoService.eliminarPedido(id);
     }
 
-    @GetMapping("/usuario/{usuarioId}")
-    public Pedido getByUsuarioId(@PathVariable Long usuarioId) {
-        return pedidoService.findByUsuarioId(usuarioId);
+    @GetMapping("/clientes/{correoCliente}")
+    public List<Pedido> getByCorreoClientePedidos(@PathVariable String correo) {
+        return pedidoService.findByClienteCorreoPedido(correo);
     }
 
     @GetMapping("/sucursal/{sucursalId}")

@@ -1,8 +1,8 @@
 package cl.duocuc.asy.ferremas.services.serviceImpl;
 
-import cl.duocuc.asy.ferremas.model.Usuario;
-import cl.duocuc.asy.ferremas.repository.UsuarioRepository;
-import cl.duocuc.asy.ferremas.services.service.UsuarioService;
+import cl.duocuc.asy.ferremas.model.Empleado;
+import cl.duocuc.asy.ferremas.repository.EmpleadoRepository;
+import cl.duocuc.asy.ferremas.services.service.EmpleadoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,12 +12,12 @@ import org.springframework.http.HttpStatus;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class UsuarioServiceImpl implements UsuarioService {
+public class EmpleadoServiceImpl implements EmpleadoService {
 
-    private final UsuarioRepository usuarioRepository;
+    private final EmpleadoRepository usuarioRepository;
 
     @Override
-    public Usuario crearUsuario(Usuario usuario) {
+    public Empleado crearEmpleado(Empleado usuario) {
         if (usuario == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El usuario no puede ser nulo");
         }
@@ -25,7 +25,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario actualizarUsuario(Usuario usuario) {
+    public Empleado actualizarEmpleado(Empleado usuario) {
         if (usuario == null || usuario.getId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El usuario o su ID no pueden ser nulos");
         }
@@ -36,7 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void eliminarUsuario(Long id) {
+    public void eliminarEmpleado(Long id) {
         if (id == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El ID del usuario no puede ser nulo");
         }
@@ -47,7 +47,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario obtenerUsuarioPorEmail(String email) {
+    public Empleado obtenerEmpleadoPorEmail(String email) {
         if (email == null || email.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El email no puede ser nulo o vacío");
         }
@@ -55,7 +55,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario obtenerUsuarioPorId(Long id) {
+    public Empleado obtenerEmpleadoPorId(Long id) {
         if (id == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El ID del usuario no puede ser nulo");
         }

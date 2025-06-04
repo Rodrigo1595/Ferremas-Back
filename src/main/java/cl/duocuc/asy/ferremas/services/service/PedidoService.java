@@ -1,5 +1,7 @@
 package cl.duocuc.asy.ferremas.services.service;
 
+import java.util.List;
+
 import cl.duocuc.asy.ferremas.model.Pedido;
 
 public interface PedidoService {
@@ -12,8 +14,11 @@ public interface PedidoService {
     void eliminarPedido(Long id);
 
     Iterable<Pedido> findAll();
+    
+    //Traer pedidos por correo
+    List<Pedido> findByClienteCorreoPedido(String correo);
 
-    Pedido findByUsuarioId(Long usuarioId);
+    Pedido findByCorreoCliente(String correo);
 
     Pedido findBySucursalId(Long sucursalId);
 }

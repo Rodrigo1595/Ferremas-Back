@@ -60,11 +60,11 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public Pedido findByUsuarioId(Long usuarioId) {
-        if (usuarioId == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El ID del usuario no puede ser nulo");
+    public Pedido findByCorreoCliente(String correoCliente) {
+        if (correoCliente == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El correo del cliente no fue encontrado o es nulo");
         }
-        Pedido pedido = pedidoRepository.findByUsuarioId(usuarioId);
+        Pedido pedido = pedidoRepository.findByCorreoCliente(correoCliente);
         if (pedido == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido no encontrado para el usuario dado");
         }
@@ -81,5 +81,17 @@ public class PedidoServiceImpl implements PedidoService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido no encontrado para la sucursal dada");
         }
         return pedido;
+    }
+
+    @Override
+    public java.util.List<Pedido> findByClienteCorreoPedido(String correo) {
+        if (correo == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El correo del cliente no puede ser nulo");
+        }
+        java.util.List<Pedido> pedidos = pedidoRepository.findByClienteCorreoPedido(correo);
+        if (pedidos.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontraron pedidos para el cliente dado");
+        }
+        return pedidos;
     }
 }

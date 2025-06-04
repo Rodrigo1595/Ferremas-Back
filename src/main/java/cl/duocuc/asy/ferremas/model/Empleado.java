@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "empleado")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Usuario {
+public class Empleado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,7 +20,7 @@ public class Usuario {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private RolUsuario rol; // COMPRADOR o VENDEDOR
+    private RolEmpleado rol;
 
     @ManyToOne
     @JoinColumn(name = "sucursal_id")
