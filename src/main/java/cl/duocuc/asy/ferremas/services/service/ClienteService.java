@@ -12,8 +12,8 @@ public interface ClienteService {
 
     Cliente findByClienteId(Long id);
 
-    Cliente findByCorreoCliente(String correo);
-
     Cliente findByRutCliente(String rut);
+
+    Cliente findByCorreoCliente(String correo);
 
 }

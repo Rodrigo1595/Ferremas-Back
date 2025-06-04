@@ -14,11 +14,8 @@ public interface PedidoService {
     void eliminarPedido(Long id);
 
     Iterable<Pedido> findAll();
-    
-    //Traer pedidos por correo
-    List<Pedido> findByClienteCorreoPedido(String correo);
 
-    Pedido findByCorreoCliente(String correo);
+    List<Pedido> findByCorreoCliente(String correo);
 
     Pedido findBySucursalId(Long sucursalId);
 }

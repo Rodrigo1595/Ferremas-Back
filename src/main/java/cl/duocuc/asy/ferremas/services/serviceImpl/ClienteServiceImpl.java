@@ -53,14 +53,7 @@ public class ClienteServiceImpl implements ClienteService {
         return clienteRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado"));
     }
-    @Override
-    public Cliente findByCorreoCliente(String correo) {
-        if (correo == null || correo.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El correo del cliente no puede ser nulo o vacío");
-        }
-        return clienteRepository.findByCorreo(correo)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado con el correo dado"));
-    }
+
     @Override
     public Cliente findByRutCliente(String rut) {
         if (rut == null || rut.isEmpty()) {
@@ -68,6 +61,15 @@ public class ClienteServiceImpl implements ClienteService {
         }
         return clienteRepository.findByRut(rut)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado con el RUT dado"));
+    }
+
+    @Override
+    public Cliente findByCorreoCliente(String correo) {
+        if (correo == null || correo.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El correo del cliente no puede ser nulo o vacío");
+        }
+        return clienteRepository.findByCorreo(correo)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado con el correo dado"));
     }
 
     

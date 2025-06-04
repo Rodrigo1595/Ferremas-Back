@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "sucursal")
@@ -23,9 +26,13 @@ public class Sucursal {
     private String ciudad;
 
     @OneToMany(mappedBy = "sucursal", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @JsonIgnore
     private List<Pedido> pedidos;
 
     @OneToMany(mappedBy = "sucursal", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @JsonIgnore
     private List<Empleado> usuarios;
 
 }

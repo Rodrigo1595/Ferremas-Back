@@ -7,6 +7,9 @@ import cl.duocuc.asy.ferremas.services.service.PedidoService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 
 @Service
@@ -60,18 +63,6 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public Pedido findByCorreoCliente(String correoCliente) {
-        if (correoCliente == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El correo del cliente no fue encontrado o es nulo");
-        }
-        Pedido pedido = pedidoRepository.findByCorreoCliente(correoCliente);
-        if (pedido == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido no encontrado para el usuario dado");
-        }
-        return pedido;
-    }
-
-    @Override
     public Pedido findBySucursalId(Long sucursalId) {
         if (sucursalId == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El ID de la sucursal no puede ser nulo");
@@ -84,11 +75,11 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public java.util.List<Pedido> findByClienteCorreoPedido(String correo) {
+    public List<Pedido> findByCorreoCliente(String correo) {
         if (correo == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El correo del cliente no puede ser nulo");
         }
-        java.util.List<Pedido> pedidos = pedidoRepository.findByClienteCorreoPedido(correo);
+        List<Pedido> pedidos = pedidoRepository.findByClienteCorreo(correo);
         if (pedidos.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontraron pedidos para el cliente dado");
         }

@@ -1,5 +1,6 @@
 package cl.duocuc.asy.ferremas.model;
 
+import java.sql.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -37,6 +38,16 @@ public class Producto {
 
     @Column(name = "imagen_url")
     private String imagenUrl;
+
+    @Column(name = "oferta")
+    private boolean oferta;
+
+    @Column(name = "nuevo")
+    private boolean nuevo;
+
+    @Column(name = "fechaIngreso", nullable = false)
+    private Date fechaIngreso;
+
 
     @OneToMany(mappedBy = "producto", cascade = jakarta.persistence.CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude

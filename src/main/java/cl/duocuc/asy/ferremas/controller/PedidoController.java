@@ -43,9 +43,9 @@ public class PedidoController {
         pedidoService.eliminarPedido(id);
     }
 
-    @GetMapping("/clientes/{correoCliente}")
+    @GetMapping("/clientes/{correo}")
     public List<Pedido> getByCorreoClientePedidos(@PathVariable String correo) {
-        return pedidoService.findByClienteCorreoPedido(correo);
+        return pedidoService.findByCorreoCliente(correo);
     }
 
     @GetMapping("/sucursal/{sucursalId}")

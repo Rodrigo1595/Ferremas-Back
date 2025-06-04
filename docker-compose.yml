@@ -12,10 +12,10 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   app:
-    # build: .
+    build: .
     # volumes:
     #   - .:/app
-    image: rodamigo95/ferremas:latest
+    #image: rodamigo95/ferremas:latest
     ports:
       - "8080:8080"
     environment:
