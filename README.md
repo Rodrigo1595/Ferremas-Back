@@ -124,7 +124,7 @@ o
 ---
 
 **Autor:**  
-[rodamigo95](https://github.com/rodamigo95)
+[Rodrigo1595](https://github.com/Rodrigo1595)
 
 
 ## Utilizar Transbank TEST con:
