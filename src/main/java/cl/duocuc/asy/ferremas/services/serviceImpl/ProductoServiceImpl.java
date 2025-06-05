@@ -88,14 +88,6 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public Optional<Producto> findProductobyId(Long id) {
-        if (id == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El ID del producto no puede ser nulo");
-        }
-        return productoRepository.findById(id);
-    }
-
-    @Override
     public Optional<Producto> findByCodProducto(String codProducto) {
         if (codProducto == null || codProducto.isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El código del producto no puede ser nulo o vacío");

@@ -48,6 +48,10 @@ public class Producto {
     @Column(name = "fechaIngreso", nullable = false)
     private Date fechaIngreso;
 
+    @Column(name = "activo")
+    @Builder.Default
+    private boolean activo = true;
+
 
     @OneToMany(mappedBy = "producto", cascade = jakarta.persistence.CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
