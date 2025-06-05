@@ -29,11 +29,32 @@ public class ProductoServiceImpl implements ProductoService {
         if (producto == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El producto no puede ser nulo");
         }
-        Long count = productoRepository.count() + 1;
-        String cod = String.format("FER-%06d", count);
-        producto.setCodProducto(cod);
+
+        // Generar un código automáticamente si no se proporciona
+        if (producto.getCodProducto() == null || producto.getCodProducto().isBlank()) {
+            producto.setCodProducto(generarSiguienteCodigo());
+        }
+
+        // Validar si el código ya existe en la base de datos
+        while (productoRepository.findByCodProducto(producto.getCodProducto()).isPresent()) {
+            producto.setCodProducto(generarSiguienteCodigo());
+        }
+
         producto.setFechaIngreso(new java.sql.Date(System.currentTimeMillis()));
         return productoRepository.save(producto);
+    }
+
+    private String generarSiguienteCodigo() {
+        // Obtener el último código generado en la base de datos
+        String ultimoCodigo = productoRepository.obtenerUltimoCodigo();
+        if (ultimoCodigo == null) {
+            return "FER-000001"; // Primer código si no hay productos
+        }
+
+        // Extraer el número del código y generar el siguiente
+        int numero = Integer.parseInt(ultimoCodigo.substring(4));
+        numero++;
+        return String.format("FER-%06d", numero);
     }
 
     @Override
