@@ -19,10 +19,10 @@ public class PrecioController {
         return precioService.findById(id);
     }
 
-    @PostMapping
-    public Precio create(@RequestBody Precio precio) {
-        return precioService.crearPrecio(precio);
-    }
+    // @PostMapping
+    // public Precio create(@RequestBody Precio precio) {
+    //     return precioService.crearPrecio(precio);
+    // }
 
     @PutMapping("/{id}")
     public Precio update(@PathVariable Long id, @RequestBody Precio precio) {
@@ -30,8 +30,8 @@ public class PrecioController {
         return precioService.actualizarPrecio(precio);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        precioService.eliminarPrecio(id);
-    }
+    // @DeleteMapping("/{id}")
+    // public void delete(@PathVariable Long id) {
+    //     precioService.eliminarPrecio(id);
+    // }
 }
