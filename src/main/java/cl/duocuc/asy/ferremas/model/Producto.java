@@ -49,7 +49,6 @@ public class Producto {
     private Date fechaIngreso;
 
     @Column(name = "activo")
-    @Builder.Default
     private boolean activo = true;
 
 
