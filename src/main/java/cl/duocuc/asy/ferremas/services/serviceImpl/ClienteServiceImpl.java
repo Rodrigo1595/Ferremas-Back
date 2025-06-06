@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import cl.duocuc.asy.ferremas.model.Cliente;
 import cl.duocuc.asy.ferremas.repository.ClienteRepository;
@@ -13,16 +14,18 @@ import cl.duocuc.asy.ferremas.services.service.ClienteService;
 @Service
 @Transactional
 @RequiredArgsConstructor
-
 public class ClienteServiceImpl implements ClienteService {
 
     private final ClienteRepository clienteRepository;
+    private final PasswordEncoder passwordEncoder;
     
     @Override
     public Cliente crearCliente(Cliente cliente) {
         if (cliente == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El cliente no puede ser nulo");
         }
+        // Hashear la contraseña antes de guardar
+        cliente.setPassword(passwordEncoder.encode(cliente.getPassword()));
         return clienteRepository.save(cliente);
     }
     @Override
@@ -79,7 +82,8 @@ public class ClienteServiceImpl implements ClienteService {
         }
         Cliente cliente = clienteRepository.findByCorreo(correo)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas"));
-        if (!cliente.getPassword().equals(password)) {
+        // Comparar la contraseña en texto plano con el hash
+        if (!passwordEncoder.matches(password, cliente.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas");
         }
         return cliente;

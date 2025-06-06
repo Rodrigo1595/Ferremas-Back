@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 @Transactional
@@ -16,12 +17,15 @@ import org.springframework.http.HttpStatus;
 public class EmpleadoServiceImpl implements EmpleadoService {
 
     private final EmpleadoRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Empleado crearEmpleado(Empleado usuario) {
         if (usuario == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El usuario no puede ser nulo");
         }
+        // Hashear la contraseña antes de guardar
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         return usuarioRepository.save(usuario);
     }
 
@@ -70,7 +74,8 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         }
         Empleado empleado = usuarioRepository.findByCorreo(correo)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas"));
-        if (!empleado.getPassword().equals(password)) {
+        // Comparar la contraseña en texto plano con el hash
+        if (!passwordEncoder.matches(password, empleado.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas");
         }
         EmpleadoLoginResponse response = new EmpleadoLoginResponse();

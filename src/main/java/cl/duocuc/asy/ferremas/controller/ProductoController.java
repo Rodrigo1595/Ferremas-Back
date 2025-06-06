@@ -4,6 +4,7 @@ import cl.duocuc.asy.ferremas.dto.ProductoCreateDTO;
 import cl.duocuc.asy.ferremas.dto.ProductoResponseDTO;
 import cl.duocuc.asy.ferremas.dto.ProductoStockUpdateDTO;
 import cl.duocuc.asy.ferremas.dto.ProductoPatchDTO;
+import cl.duocuc.asy.ferremas.dto.ProductoInactivoDTO;
 
 import cl.duocuc.asy.ferremas.model.Categoria;
 import cl.duocuc.asy.ferremas.model.Producto;
@@ -46,6 +47,8 @@ public class ProductoController {
                     dto.setDescripcion(producto.getDescripcion());
                     dto.setMarca(producto.getMarca());
                     dto.setStock(producto.getStock());
+                    dto.setOferta(producto.isOferta());
+                    dto.setNuevo(producto.isNuevo());
                     dto.setImagenUrl(producto.getImagenUrl());
                     dto.setCategoriaId(producto.getCategoria() != null ? producto.getCategoria().getId() : null);
                     dto.setSubCategoriaId(
@@ -197,6 +200,7 @@ public class ProductoController {
         return dto;
     }
 
+    @Operation(summary = "Actualizar por cod producto", description = "Actualizar datos del producto")
     @PatchMapping("/codigo/{codProducto}")
     public ProductoResponseDTO patchProducto(
             @PathVariable String codProducto,
@@ -249,4 +253,18 @@ public class ProductoController {
         productoService.actualizarProducto(producto);
     }
 
+    @Operation(summary = "Traer lista de productos inactivos", description = "Trae lista completa de items inactivos de productos")
+    @GetMapping("/inactivos")
+    public List<ProductoInactivoDTO> getProductosInactivos() {
+        return productoService.findAll().stream()
+                .filter(producto -> !producto.isActivo())
+                .map(producto -> {
+                    ProductoInactivoDTO dto = new ProductoInactivoDTO();
+                    dto.setCodProducto(producto.getCodProducto());
+                    dto.setNombre(producto.getNombre());
+                    dto.setActivo(producto.isActivo());
+                    return dto;
+                })
+                .toList();
+    }
 }
