@@ -171,6 +171,9 @@ public class ProductoController {
             dto.setMarca(producto.getMarca());
             dto.setStock(producto.getStock());
             dto.setImagenUrl(producto.getImagenUrl());
+            dto.setActivo(producto.isActivo());
+            dto.setOferta(producto.isOferta());
+            dto.setNuevo(producto.isNuevo());
             dto.setCategoriaId(producto.getCategoria() != null ? producto.getCategoria().getId() : null);
             dto.setSubCategoriaId(producto.getSubCategoria() != null ? producto.getSubCategoria().getId() : null);
             dto.setPrecioActual(
@@ -280,6 +283,8 @@ public class ProductoController {
         dto.setDescripcion(actualizado.getDescripcion());
         dto.setMarca(actualizado.getMarca());
         dto.setStock(actualizado.getStock());
+        dto.setOferta(actualizado.isOferta());
+        dto.setNuevo(actualizado.isNuevo());
         dto.setImagenUrl(actualizado.getImagenUrl());
         dto.setCategoriaId(actualizado.getCategoria() != null ? actualizado.getCategoria().getId() : null);
         dto.setSubCategoriaId(actualizado.getSubCategoria() != null ? actualizado.getSubCategoria().getId() : null);

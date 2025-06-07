@@ -16,4 +16,5 @@ public class ProductoResponseDTO {
     private Double precioActual;
     private Boolean oferta;
     private Boolean nuevo;
+    private Boolean activo;
 }
