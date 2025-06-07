@@ -1,7 +1,13 @@
 package cl.duocuc.asy.ferremas.controller;
 
+import cl.duocuc.asy.ferremas.dto.PedidoCreateDTO;
 import cl.duocuc.asy.ferremas.model.Pedido;
+import cl.duocuc.asy.ferremas.model.Cliente;
+import cl.duocuc.asy.ferremas.model.Producto;
+import cl.duocuc.asy.ferremas.model.ItemPedido;
 import cl.duocuc.asy.ferremas.services.service.PedidoService;
+import cl.duocuc.asy.ferremas.services.service.ClienteService;
+import cl.duocuc.asy.ferremas.services.service.ProductoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 @Tag(name = "Pedidos", description = "Gestión de pedidos: crear, actualizar, eliminar y consultar pedidos por cliente o sucursal.")
 @RestController
@@ -17,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 public class PedidoController {
 
     private final PedidoService pedidoService;
+    private final ClienteService clienteService;
+    private final ProductoService productoService;
 
     @Operation(summary = "Listar todos los pedidos", description = "Obtiene el listado completo de todos los pedidos registrados.")
     @GetMapping
@@ -32,7 +42,29 @@ public class PedidoController {
 
     @Operation(summary = "Crear un nuevo pedido", description = "Registra un nuevo pedido en el sistema.")
     @PostMapping
-    public Pedido create(@RequestBody Pedido pedido) {
+    public Pedido create(@RequestBody PedidoCreateDTO pedidoDTO) {
+        Cliente cliente = clienteService.findByClienteId(pedidoDTO.getClienteId());
+        Pedido pedido = new Pedido();
+        pedido.setCliente(cliente);
+        pedido.setFecha(java.time.LocalDateTime.now());
+
+        List<ItemPedido> items = pedidoDTO.getItems().stream().map(itemDTO -> {
+            Producto producto = productoService.findByCodProducto(itemDTO.getCodProducto())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado: " + itemDTO.getCodProducto()));
+            if (producto.getStock() < itemDTO.getCantidad()) {
+                throw new IllegalArgumentException("Stock insuficiente para el producto: " + producto.getNombre());
+            }
+            producto.setStock(producto.getStock() - itemDTO.getCantidad());
+            productoService.actualizarProducto(producto); // Guarda el nuevo stock
+            ItemPedido item = new ItemPedido();
+            item.setProducto(producto);
+            item.setCantidad(itemDTO.getCantidad());
+            item.setPedido(pedido);
+            return item;
+        }).toList();
+
+        pedido.setItems(items);
+
         return pedidoService.crearPedido(pedido);
     }
 

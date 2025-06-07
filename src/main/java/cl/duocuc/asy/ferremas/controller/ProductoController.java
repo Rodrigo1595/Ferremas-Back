@@ -68,11 +68,19 @@ public class ProductoController {
                 .collect(Collectors.toList());
     }
 
-    @Operation(summary = "Crear un nuevo producto", description = "Registra un nuevo producto con su categoría, subcategoría y precio inicial.")
+    @Operation(summary = "Crear un nuevo producto", description = "Registra un nuevo producto con su categoría, subcategoría (opcional) y precio inicial.")
     @PostMapping
     public Producto create(@RequestBody ProductoCreateDTO dto) {
         Categoria categoria = categoriaService.buscarPorId(dto.getCategoriaId());
-        SubCategoria subCategoria = subCategoriaService.buscarPorId(dto.getSubCategoriaId());
+        if (categoria == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Categoría no encontrada");
+        }
+
+        SubCategoria subCategoria = null;
+        if (dto.getSubCategoriaId() != null) {
+            subCategoria = subCategoriaService.buscarPorId(dto.getSubCategoriaId());
+        }
+
         Producto producto = Producto.builder()
                 .nombre(dto.getNombre())
                 .descripcion(dto.getDescripcion())
@@ -81,14 +89,14 @@ public class ProductoController {
                 .imagenUrl(dto.getImagenUrl())
                 .categoria(categoria)
                 .subCategoria(subCategoria)
+                .oferta(dto.getOferta() != null ? dto.getOferta() : false)
+                .activo(true)
                 .build();
 
-        // Guardar producto primero para obtener el ID
         Producto savedProducto = productoService.crearProducto(producto);
 
-        // Si viene precio, desactivar precios anteriores y registrar el nuevo como
-        // activo
         if (dto.getPrecio() != null) {
+            // Desactivar precios anteriores y registrar el nuevo como activo
             List<Precio> preciosAnteriores = precioService.findByProductoId(savedProducto.getId());
             preciosAnteriores.forEach(p -> {
                 if (p.isActivo()) {
@@ -98,7 +106,7 @@ public class ProductoController {
             });
 
             Precio precio = Precio.builder()
-                    .fecha(LocalDateTime.now())
+                    .fecha(java.time.LocalDateTime.now())
                     .valor(dto.getPrecio())
                     .producto(savedProducto)
                     .activo(true)

@@ -12,4 +12,5 @@ public class ProductoCreateDTO {
     private Long categoriaId;
     private Long subCategoriaId;
     private Double precio;
+    private Boolean oferta;
 }
