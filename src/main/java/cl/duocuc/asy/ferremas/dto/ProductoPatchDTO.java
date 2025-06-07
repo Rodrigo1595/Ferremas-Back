@@ -12,4 +12,7 @@ public class ProductoPatchDTO {
     private Boolean oferta;
     private Boolean nuevo;
     private Boolean activo;
+    private Long categoriaId;
+    private Long subCategoriaId;
+    private Double precio;
 }

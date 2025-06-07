@@ -12,6 +12,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Tag(name = "Empleados", description = 
 "Gestión de Empleados: crear, actualizar, eliminar y consultar usuarios por ID o correo.")
 @RestController
@@ -68,5 +70,11 @@ public class EmpleadoController {
     @PostMapping("/login")
     public EmpleadoLoginResponse login(@RequestBody LoginRequest loginRequest) {
         return usuarioService.login(loginRequest.getCorreo(), loginRequest.getPassword());
+    }
+
+    @Operation(summary = "Listar todos los empleados", description = "Obtiene el listado completo de todos los empleados registrados.")
+    @GetMapping
+    public List<Empleado> getAll() {
+        return usuarioService.findAll();
     }
 }

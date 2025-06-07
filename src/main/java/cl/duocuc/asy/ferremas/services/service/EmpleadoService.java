@@ -2,6 +2,7 @@ package cl.duocuc.asy.ferremas.services.service;
 
 import cl.duocuc.asy.ferremas.model.Empleado;
 import cl.duocuc.asy.ferremas.dto.EmpleadoLoginResponse;
+import java.util.List;
 
 public interface EmpleadoService {
     Empleado obtenerEmpleadoPorId(Long id);
@@ -16,4 +17,5 @@ public interface EmpleadoService {
 
     EmpleadoLoginResponse login(String correo, String password);
     
+    List<Empleado> findAll();
 }

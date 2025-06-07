@@ -11,6 +11,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -82,5 +84,10 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         response.setCorreo(empleado.getCorreo());
         response.setRol(empleado.getRol());
         return response;
+    }
+
+    @Override
+    public List<Empleado> findAll() {
+        return usuarioRepository.findAll();
     }
 }

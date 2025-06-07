@@ -233,7 +233,45 @@ public class ProductoController {
         if (patchDTO.getActivo() != null)
             producto.setActivo(patchDTO.getActivo());
 
+        // Actualizar categoría si corresponde
+        if (patchDTO.getCategoriaId() != null) {
+            Categoria categoria = categoriaService.buscarPorId(patchDTO.getCategoriaId());
+            if (categoria == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Categoría no encontrada");
+            }
+            producto.setCategoria(categoria);
+        }
+
+        // Actualizar subcategoría si corresponde
+        if (patchDTO.getSubCategoriaId() != null) {
+            SubCategoria subCategoria = subCategoriaService.buscarPorId(patchDTO.getSubCategoriaId());
+            if (subCategoria == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Subcategoría no encontrada");
+            }
+            producto.setSubCategoria(subCategoria);
+        }
+
         Producto actualizado = productoService.actualizarProducto(producto);
+
+        // Actualizar precio si corresponde
+        if (patchDTO.getPrecio() != null) {
+            // Desactivar precios anteriores
+            List<Precio> preciosAnteriores = precioService.findByProductoId(actualizado.getId());
+            preciosAnteriores.forEach(p -> {
+                if (p.isActivo()) {
+                    p.setActivo(false);
+                    precioService.actualizarPrecio(p);
+                }
+            });
+
+            Precio precio = Precio.builder()
+                    .fecha(LocalDateTime.now())
+                    .valor(patchDTO.getPrecio())
+                    .producto(actualizado)
+                    .activo(true)
+                    .build();
+            precioService.crearPrecio(precio);
+        }
 
         ProductoResponseDTO dto = new ProductoResponseDTO();
         dto.setId(actualizado.getId());
