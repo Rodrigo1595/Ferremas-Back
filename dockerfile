@@ -36,6 +36,8 @@ WORKDIR /app
 # Copia solo los archivos de dependencias primero
 COPY pom.xml ./
 COPY .mvn/ .mvn/
+# Copiar archivo de variables de entorno si existe
+COPY .env* ./
 
 # Descarga dependencias y las cachea en esta capa
 RUN mvn dependency:go-offline
