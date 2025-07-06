@@ -18,7 +18,5 @@ public interface ProductoService {
 
     List<Producto> findBySubCategoriaId(Long subCategoriaId);
 
-    Optional<Producto> findProductobyId(Long id);
-
     Optional<Producto> findByCodProducto(String codProducto);
 }

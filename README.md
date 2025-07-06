@@ -70,15 +70,15 @@ Ferremas es una API RESTful desarrollada en Spring Boot para la gestión de prod
 - `POST /api/precios`  
   Crea un nuevo registro de precio para un producto.
 
-### 👤 Usuarios
+### 👤 Empleado
 
-- `GET /api/usuarios/{id}`  
+- `GET /api/empleados/{id}`  
   Obtiene un usuario por ID.
 
-- `POST /api/usuarios`  
+- `POST /api/empleados`  
   Crea un usuario.
 
-- `GET /api/usuarios/correo/{correo}`  
+- `GET /api/empleados/correo/{correo}`  
   Busca usuario por correo.
 
 ### 🏢 Sucursales
@@ -124,7 +124,7 @@ o
 ---
 
 **Autor:**  
-[rodamigo95](https://github.com/rodamigo95)
+[Rodrigo1595](https://github.com/Rodrigo1595)
 
 
 ## Utilizar Transbank TEST con:

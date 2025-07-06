@@ -1,9 +1,12 @@
 package cl.duocuc.asy.ferremas.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -19,9 +22,13 @@ public class ItemPedido {
 
     @ManyToOne
     @JoinColumn(name = "producto_id")
+    @ToString.Exclude
+    @JsonIgnore
     private Producto producto;
 
     @ManyToOne
     @JoinColumn(name = "pedido_id")
+    @ToString.Exclude
+    @JsonIgnore
     private Pedido pedido;
 }

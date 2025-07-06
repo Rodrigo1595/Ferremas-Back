@@ -5,24 +5,28 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Entity
-@Table(name = "usuario")
+@Table(name = "Empleado")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Usuario {
+public class Empleado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nombreCompleto;
+    @Column(unique = true, nullable = false)
+    private String rut;
+    @Column(unique = true, nullable = false)
     private String correo;
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private RolUsuario rol; // COMPRADOR o VENDEDOR
+    private RolEmpleado rol;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "sucursal_id")
     private Sucursal sucursal;
 }

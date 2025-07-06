@@ -24,6 +24,7 @@ import cl.transbank.webpay.exception.TransactionCreateException;
 import cl.transbank.webpay.exception.TransactionRefundException;
 import cl.transbank.webpay.exception.TransactionStatusException;
 import cl.transbank.webpay.webpayplus.WebpayPlus.Transaction;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.PostConstruct;
 
@@ -50,6 +51,10 @@ public class WebPayController {
                 IntegrationType.TEST);
     }
 
+    @Operation(
+        summary = "Crear transacción Webpay",
+        description = "Inicia una nueva transacción de pago Webpay Plus con los datos de la compra."
+    )
     @CrossOrigin(origins = LOCAL_ADDRESS)
     @PostMapping("/webpay")
     public ResponseEntity<Object> createTransaction(
@@ -83,6 +88,10 @@ public class WebPayController {
 
     }
 
+    @Operation(
+        summary = "Confirmar transacción Webpay",
+        description = "Confirma (commit) una transacción Webpay Plus utilizando el token recibido."
+    )
     @CrossOrigin(origins = LOCAL_ADDRESS)
     @PostMapping("/webpay/commit")
     public ResponseEntity<Object> commitTransaction(
@@ -105,6 +114,10 @@ public class WebPayController {
         }
     }
 
+    @Operation(
+        summary = "Consultar estado de transacción Webpay",
+        description = "Consulta el estado actual de una transacción Webpay Plus usando el token."
+    )
     @CrossOrigin(origins = LOCAL_ADDRESS)
     @PostMapping("/webpay/search")
     public ResponseEntity<Object> searchTransaction(
@@ -128,6 +141,10 @@ public class WebPayController {
         }
     }
 
+    @Operation(
+        summary = "Reembolsar transacción Webpay",
+        description = "Realiza el reembolso (refund) de una transacción Webpay Plus usando el token y el monto."
+    )
     @CrossOrigin(origins = LOCAL_ADDRESS)
     @PostMapping("/webpay/refund")
     public ResponseEntity<Object> refundTransaction(
@@ -154,6 +171,10 @@ public class WebPayController {
         }
     }
 
+    @Operation(
+        summary = "Capturar transacción Webpay",
+        description = "Realiza la captura de una transacción Webpay Plus autorizada, usando el token, buyOrder y authorizationCode."
+    )
     @CrossOrigin(origins = LOCAL_ADDRESS)
     @PostMapping("/webpay/capture")
     public ResponseEntity<Object> captureTransaction(@RequestParam(TOKEN_KEY) String token,
