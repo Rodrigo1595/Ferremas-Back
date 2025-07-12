@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -46,12 +48,15 @@ public class ItemPedidoServiceImpl implements ItemPedidoService {
     }
 
     @Override
-    public ItemPedido findByPedidoId(Long id) {
+    public List<ItemPedido> findByPedidoId(Long id) {
         if (id == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El ID del pedido no puede ser nulo");
         }
-        return itemPedidoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item de pedido no encontrado para el pedido dado"));
+        List<ItemPedido> items = itemPedidoRepository.findByPedidoId(id);
+        if (items.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontraron ítems para el pedido con ID: " + id);
+        }
+        return items;
     }
 
     @Override
