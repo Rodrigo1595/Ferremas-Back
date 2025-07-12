@@ -16,10 +16,13 @@ public class ConsultaCliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Relación con Cliente
+    // Relación opcional con Cliente
     @ManyToOne
-    @JoinColumn(name = "cliente_rut", referencedColumnName = "rut")
+    @JoinColumn(name = "cliente_rut", referencedColumnName = "rut", nullable = true)
     private Cliente cliente;
+    
+    // Agregar campo para correo directo en caso de consultas anónimas
+    private String correoConsulta;
     
     private String mensaje;
     private LocalDateTime fecha;

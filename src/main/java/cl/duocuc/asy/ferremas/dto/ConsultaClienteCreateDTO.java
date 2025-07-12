@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class ConsultaClienteCreateDTO {
-    private String clienteRut;
+    private String clienteCorreo; // Cambiar de clienteRut a clienteCorreo
     private String mensaje;
     private LocalDateTime fecha;
     private String mensajeCliente;

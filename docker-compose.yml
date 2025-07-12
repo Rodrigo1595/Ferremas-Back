@@ -12,9 +12,6 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   app:
-    # build: .
-    # volumes:
-    #   - .:/app
     image: rodamigo95/ferremas:latest
     ports:
       - "8080:8080"
@@ -25,6 +22,10 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      # Agregar valores por defecto para evitar errores
+      BCENTRAL_URL: ${BCENTRAL_URL:-https://si3.bcentral.cl}
+      BCENTRAL_USER: ${BCENTRAL_USER:-amigo.rodrigo.morgado@gmail.com}
+      BCENTRAL_PASS: ${BCENTRAL_PASS:-BcoCentralBdeRod07#!}
     depends_on:
       - db
 

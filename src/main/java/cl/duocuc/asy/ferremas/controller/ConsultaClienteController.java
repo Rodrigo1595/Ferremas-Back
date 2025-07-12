@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,12 +28,20 @@ public class ConsultaClienteController {
     @Operation(summary = "Crear una nueva consulta de cliente", description = "Permite a un cliente registrar una nueva consulta o requerimiento. El campo 'resuelto' se inicializa en false.")
     @PostMapping
     public ConsultaClienteResponseDTO create(@RequestBody ConsultaClienteCreateDTO dto) {
-        // Assuming you have a ClienteService or a way to fetch Cliente by rut
-        Cliente cliente = clienteService.findByRutCliente(dto.getClienteRut());
+        // Intentar buscar cliente por correo, pero permitir consultas sin cliente registrado
+        Cliente cliente = null;
+        try {
+            cliente = clienteService.findByCorreoCliente(dto.getClienteCorreo());
+        } catch (ResponseStatusException e) {
+            // Cliente no encontrado, permitir consulta anónima
+            cliente = null;
+        }
+
         ConsultaCliente consulta = ConsultaCliente.builder()
                 .cliente(cliente)
+                .correoConsulta(dto.getClienteCorreo()) // Guardar el correo para consultas anónimas
                 .mensaje(dto.getMensaje())
-                .fecha(dto.getFecha())
+                .fecha(dto.getFecha() != null ? dto.getFecha() : java.time.LocalDateTime.now())
                 .mensajeCliente(dto.getMensajeCliente())
                 .resuelto(false)
                 .build();
@@ -74,12 +83,17 @@ public class ConsultaClienteController {
     private ConsultaClienteResponseDTO toResponseDTO(ConsultaCliente consulta) {
         ConsultaClienteResponseDTO dto = new ConsultaClienteResponseDTO();
         dto.setId(consulta.getId());
-        dto.setClienteRut(consulta.getCliente().getRut());
+        dto.setClienteRut(consulta.getCliente() != null ? consulta.getCliente().getRut() : null);
         dto.setMensaje(consulta.getMensaje());
         dto.setFecha(consulta.getFecha());
         dto.setMensajeCliente(consulta.getMensajeCliente());
         dto.setRespuestaVendedor(consulta.getRespuestaVendedor());
-        dto.setCorreo(consulta.getEmpleado() != null ? consulta.getEmpleado().getCorreo() : null);
+        
+        // Priorizar correo del cliente registrado, sino usar el correo de consulta anónima
+        dto.setCorreo(consulta.getCliente() != null ? 
+            consulta.getCliente().getCorreo() : 
+            consulta.getCorreoConsulta());
+        
         dto.setResuelto(consulta.isResuelto());
         return dto;
     }
