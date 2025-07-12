@@ -14,9 +14,22 @@ public class EmailController {
 
     @PostMapping("/send")
     public String sendEmail(@RequestBody EmailRequest request) {
-        // Aquí puedes mockear el body, subject, etc. si quieres
-        emailService.sendMockEmail(request.getTo(), request.getSubject(), request.getBody());
-        return "Email enviado a " + request.getTo();
+        try {
+            emailService.sendMockEmail(request.getTo(), request.getSubject(), request.getBody());
+            return "Email enviado exitosamente a " + request.getTo();
+        } catch (Exception e) {
+            return "Error al enviar email: " + e.getMessage();
+        }
+    }
+
+    @PostMapping("/send-html")
+    public String sendHtmlEmail(@RequestBody EmailRequest request) {
+        try {
+            emailService.sendHtmlEmail(request.getTo(), request.getSubject(), request.getBody(), request.getFrom());
+            return "Email HTML enviado exitosamente a " + request.getTo();
+        } catch (Exception e) {
+            return "Error al enviar email HTML: " + e.getMessage();
+        }
     }
 
     @Data
@@ -24,5 +37,6 @@ public class EmailController {
         private String to;
         private String subject;
         private String body;
+        private String from;
     }
 }
